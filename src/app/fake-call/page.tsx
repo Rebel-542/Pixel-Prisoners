@@ -1,46 +1,18 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FakeCallScreen } from '@/components/features/fake-call/FakeCallScreen';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { PhoneCall, Zap, Loader2 } from 'lucide-react';
+import { PhoneCall, Zap } from 'lucide-react';
 import Image from 'next/image';
-import { generateFakeCallImage, type GenerateFakeCallImageOutput } from '@/ai/flows/generate-fake-call-image-flow';
-import { useToast } from '@/hooks/use-toast';
+
+// Use the user-provided static image URL
+const STATIC_IMAGE_URL = "https://fireworks.proxy.beehiiv.com/v2/images/5252c38d-37a4-4137-9b49-be360a15cb18.png?width=1024&height=996&fit=contain&auto=compress&compression=fast";
 
 export default function FakeCallPage() {
   const [showFakeCall, setShowFakeCall] = useState(false);
-  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
-  const [isGeneratingImage, setIsGeneratingImage] = useState(true);
-  const { toast } = useToast();
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      if (showFakeCall) return; // Don't generate if already on fake call screen
-
-      setIsGeneratingImage(true);
-      setGeneratedImageUrl(null); // Clear previous image
-      try {
-        const result: GenerateFakeCallImageOutput = await generateFakeCallImage();
-        setGeneratedImageUrl(result.imageDataUri);
-      } catch (error) {
-        console.error("Failed to generate fake call image:", error);
-        toast({
-          title: "Image Generation Failed",
-          description: "Could not generate the helper image. Using a placeholder.",
-          variant: "destructive",
-        });
-        // Fallback to a generic placeholder if generation fails
-        setGeneratedImageUrl("https://picsum.photos/seed/cellphonePerson/400/200");
-      } finally {
-        setIsGeneratingImage(false);
-      }
-    };
-
-    fetchImage();
-  }, [showFakeCall, toast]);
 
   const handleStartFakeCall = () => {
     setShowFakeCall(true);
@@ -67,38 +39,15 @@ export default function FakeCallPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-           <div className="w-full h-64 md:h-72 relative rounded-lg overflow-hidden bg-muted flex items-center justify-center border"> {/* Increased height slightly */}
-            {isGeneratingImage && (
-              <div className="flex flex-col items-center text-muted-foreground p-4">
-                <Loader2 className="h-12 w-12 animate-spin text-primary" />
-                <p className="mt-3 text-sm">Generating image for you...</p>
-              </div>
-            )}
-            {!isGeneratingImage && generatedImageUrl && (
-              <Image 
-                src={generatedImageUrl} 
-                layout="fill" 
-                objectFit="contain" 
-                alt="AI generated illustration for fake call" 
-                data-ai-hint="person cellphone"
-                className="p-2" // Add some padding around the image
-              />
-            )}
-            {!isGeneratingImage && !generatedImageUrl && ( 
-                <div className="text-muted-foreground p-4 text-center">
-                    <p>Image could not be loaded.</p>
-                    <p className="text-xs">Displaying default placeholder.</p>
-                     <Image 
-                        src="https://picsum.photos/seed/cellphoneGeneric/400/200" 
-                        width={400}
-                        height={200}
-                        objectFit="cover" 
-                        alt="Fallback placeholder image for a cellphone" 
-                        className="mt-2 rounded"
-                        data-ai-hint="cellphone placeholder"
-                    />
-                </div>
-            )}
+           <div className="w-full h-64 md:h-72 relative rounded-lg overflow-hidden bg-muted flex items-center justify-center border">
+            <Image 
+              src={STATIC_IMAGE_URL} 
+              alt="Memoji-style avatar on a call with a classic phone receiver" 
+              layout="fill" 
+              objectFit="contain" 
+              data-ai-hint="avatar call"
+              className="p-2"
+            />
           </div>
           <Button onClick={handleStartFakeCall} size="lg" className="w-full">
             <Zap className="mr-2 h-5 w-5" /> Start Fake Call
@@ -111,4 +60,3 @@ export default function FakeCallPage() {
     </div>
   );
 }
-
