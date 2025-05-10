@@ -22,7 +22,7 @@
     --muted: 300 30% 97%; /* Very Light Lavender Gray */
     --muted-foreground: 240 10% 55%; /* Medium Slate Blue/Grey */
 
-    --accent: 0 100% 50%; /* Bright Red for SOS */
+    --accent: 330 85% 58%; /* Dark Pink for SOS */
     --accent-foreground: 0 0% 100%; /* White */
 
     --destructive: 0 84.2% 60.2%; /* Default destructive red */
@@ -71,7 +71,7 @@
     --muted: 240 10% 25%; /* Very Dark Slate */
     --muted-foreground: 300 20% 70%; /* Medium Lavender tint for muted text */
 
-    --accent: 0 100% 55%; /* Bright Red for SOS (Dark Mode) */
+    --accent: 330 80% 55%; /* Dark Pink for SOS (Dark Mode) */
     --accent-foreground: 0 0% 100%; /* White */
 
     --destructive: 0 72.2% 50.6%;

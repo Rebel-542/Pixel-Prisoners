@@ -171,7 +171,7 @@ export function SOSButton({ className }: SOSButtonProps) {
         <Button
           variant="default"
           size="lg"
-          className={`bg-accent hover:bg-red-700 text-accent-foreground text-2xl font-bold py-10 px-12 rounded-full shadow-lg hover:shadow-xl transition-shadow ${className}`}
+          className={`bg-accent hover:bg-accent/90 text-accent-foreground text-2xl font-bold py-10 px-12 rounded-full shadow-lg hover:shadow-xl transition-shadow ${className}`}
         >
           <ShieldAlert className="mr-3 h-10 w-10" /> SOS
         </Button>
@@ -188,7 +188,7 @@ export function SOSButton({ className }: SOSButtonProps) {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction 
             onClick={handleSOSActivation} 
-            className="bg-accent hover:bg-red-700 text-accent-foreground"
+            className="bg-accent hover:bg-accent/90 text-accent-foreground"
             disabled={contacts.length === 0}
           >
             Activate SOS
@@ -198,3 +198,4 @@ export function SOSButton({ className }: SOSButtonProps) {
     </AlertDialog>
   );
 }
+
