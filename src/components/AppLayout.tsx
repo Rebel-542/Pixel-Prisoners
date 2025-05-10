@@ -1,12 +1,20 @@
-
+"use client";
 import type { ReactNode } from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Users, MapPin, Route, PhoneCall, Settings, Menu, Instagram, Twitter, Facebook } from 'lucide-react'; // Added Facebook
+import { ShieldCheck, Users, MapPin, Route, PhoneCall, Settings, Menu, Instagram, Twitter, Facebook, LogIn, LogOut, UserCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
-
-// Removed SnapchatIcon SVG as it's no longer needed
+import { useAuth } from '@/hooks/useAuth';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface NavItem {
   href: string;
@@ -20,10 +28,18 @@ const navItems: NavItem[] = [
   { href: '/share-location', label: 'Share Location', icon: <MapPin className="h-5 w-5" /> },
   { href: '/safe-route', label: 'Safe Route', icon: <Route className="h-5 w-5" /> },
   { href: '/fake-call', label: 'Fake Call', icon: <PhoneCall className="h-5 w-5" /> },
+  { href: '/profile', label: 'Profile', icon: <UserCircle className="h-5 w-5" /> },
   { href: '/settings', label: 'Settings', icon: <Settings className="h-5 w-5" /> },
 ];
 
 const AppHeader = () => {
+  const { currentUser, logOut, loading } = useAuth();
+
+  const getInitials = (email: string | null | undefined) => {
+    if (!email) return 'GA'; 
+    return email.substring(0, 2).toUpperCase();
+  };
+  
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
@@ -32,47 +48,93 @@ const AppHeader = () => {
           <span className="text-xl font-bold">Guardian Angel</span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
+        <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
           {navItems.map((item) => (
-            <Button key={item.href} variant="ghost" asChild>
-              <Link href={item.href} className="text-sm font-medium transition-colors hover:text-primary">
+            <Button key={item.href} variant="ghost" asChild className="text-sm">
+              <Link href={item.href} className="font-medium transition-colors hover:text-primary">
                 {item.label}
               </Link>
             </Button>
           ))}
         </nav>
 
-        {/* Mobile Navigation */}
-        <div className="md:hidden">
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle navigation menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[280px] p-0">
-              <ScrollArea className="h-full">
-                <div className="p-6">
-                  <Link href="/" className="flex items-center gap-2 mb-6">
-                     <ShieldCheck className="h-7 w-7 text-primary" />
-                     <span className="text-lg font-bold">Guardian Angel</span>
+        <div className="flex items-center gap-2">
+          {loading ? (
+             <div className="h-8 w-8 animate-pulse rounded-full bg-muted"></div>
+          ) : currentUser ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                  <Avatar className="h-9 w-9">
+                    {/* <AvatarImage src={currentUser.photoURL || undefined} alt={currentUser.displayName || currentUser.email || "User"} /> */}
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      {getInitials(currentUser.email)}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">
+                      {currentUser.displayName || currentUser.email}
+                    </p>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      Signed In
+                    </p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild className="cursor-pointer">
+                  <Link href="/profile">
+                    <UserCircle className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
                   </Link>
-                  <nav className="flex flex-col space-y-3">
-                    {navItems.map((item) => (
-                      <Button key={item.href} variant="ghost" className="justify-start" asChild>
-                         <Link href={item.href} className="flex items-center gap-3 text-md">
-                          {item.icon}
-                          {item.label}
-                        </Link>
-                      </Button>
-                    ))}
-                  </nav>
-                </div>
-              </ScrollArea>
-            </SheetContent>
-          </Sheet>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={logOut} className="cursor-pointer">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button asChild variant="outline">
+              <Link href="/profile">
+                <LogIn className="mr-2 h-4 w-4" /> Login / Sign Up
+              </Link>
+            </Button>
+          )}
+
+          <div className="md:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Toggle navigation menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[280px] p-0">
+                <ScrollArea className="h-full">
+                  <div className="p-6">
+                    <Link href="/" className="flex items-center gap-2 mb-6">
+                       <ShieldCheck className="h-7 w-7 text-primary" />
+                       <span className="text-lg font-bold">Guardian Angel</span>
+                    </Link>
+                    <nav className="flex flex-col space-y-3">
+                      {navItems.map((item) => (
+                        <Button key={item.href} variant="ghost" className="justify-start" asChild>
+                           <Link href={item.href} className="flex items-center gap-3 text-md">
+                            {item.icon}
+                            {item.label}
+                          </Link>
+                        </Button>
+                      ))}
+                    </nav>
+                  </div>
+                </ScrollArea>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>

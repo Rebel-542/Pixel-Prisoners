@@ -1,30 +1,41 @@
-
 "use client";
 
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
 import { AdvancedFeatureSetting } from "@/components/features/settings/AdvancedFeatureSetting";
-import { SmartphoneNfc, Mic, Camera, KeyRound, Save, Trash2 } from "lucide-react";
+import { SmartphoneNfc, Mic, Camera, KeyRound, Save, Trash2, Loader2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { useState, useEffect } from "react";
 
 const API_KEY_STORAGE_KEY = "geminiApiKey";
 
 export default function SettingsPage() {
+  const { currentUser, loading: authLoading } = useAuth();
+  const router = useRouter();
   const { toast } = useToast();
   const [apiKey, setApiKey] = useState("");
-  const [isMounted, setIsMounted] = useState(false);
+  const [isClientMounted, setIsClientMounted] = useState(false);
 
   useEffect(() => {
-    // This effect runs only on the client after hydration
-    setIsMounted(true);
-    const storedApiKey = localStorage.getItem(API_KEY_STORAGE_KEY);
-    if (storedApiKey) {
-      setApiKey(storedApiKey);
+    setIsClientMounted(true); 
+    if (!authLoading && !currentUser) {
+      router.push('/profile?redirect=/settings');
     }
-  }, []);
+  }, [currentUser, authLoading, router]);
+  
+  useEffect(() => {
+    if (currentUser && isClientMounted) {
+      const storedApiKey = localStorage.getItem(API_KEY_STORAGE_KEY);
+      if (storedApiKey) {
+        setApiKey(storedApiKey);
+      }
+    }
+  }, [currentUser, isClientMounted]);
+
 
   const handleSaveApiKey = () => {
     if (!apiKey.trim()) {
@@ -51,30 +62,14 @@ export default function SettingsPage() {
     });
   };
 
-  // Render a loader or minimal content until mounted to avoid hydration mismatch
-  if (!isMounted) {
+  if (authLoading || (!currentUser && !authLoading) || !isClientMounted) {
     return (
-      <div className="container mx-auto py-8 px-4">
-        <h1 className="text-3xl font-bold mb-8 text-center">Settings & Advanced Features</h1>
-        <div className="max-w-2xl mx-auto space-y-8">
-          <Card className="shadow-lg">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <KeyRound className="h-6 w-6 text-primary" />
-                <CardTitle>Gemini API Key Configuration</CardTitle>
-              </div>
-              <CardDescription>
-                Loading API key settings...
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="h-10 bg-muted rounded-md animate-pulse w-full"></div>
-            </CardContent>
-          </Card>
-        </div>
+      <div className="flex items-center justify-center min-h-[calc(100vh-12rem)]">
+        <Loader2 className="h-10 w-10 animate-spin text-primary" />
       </div>
     );
   }
+
 
   return (
     <div className="container mx-auto py-8 px-4">
