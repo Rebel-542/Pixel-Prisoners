@@ -41,7 +41,7 @@ export default function HomePage() {
       <section className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4 text-primary tracking-tight">Welcome to Guardian Angel</h1>
         <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-          Your personal safety companion. Tap the SOS button in case of emergency, or explore other features to enhance your safety.
+          Empowering Safety, Anytime, Anywhere.
         </p>
         <SOSButton className="mx-auto" />
       </section>
