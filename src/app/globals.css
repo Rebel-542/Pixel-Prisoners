@@ -133,5 +133,5 @@
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='%23FCE0EB'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Ccircle cx='12' cy='6' r='2.5'/%3E%3Ccircle cx='12' cy='18' r='2.5'/%3E%3Ccircle cx='6' cy='12' r='2.5'/%3E%3Ccircle cx='18' cy='12' r='2.5'/%3E%3C/svg%3E");
   background-size: 100px 100px; /* Size of the repeating unit */
   pointer-events: none; /* Make sure it doesn't interfere with interactions */
-  animation: gentleFloatUpAndPulse 20s linear infinite;
+  animation: gentleFloatUpAndPulse 10s linear infinite;
 }
