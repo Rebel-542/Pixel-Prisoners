@@ -1,18 +1,52 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FakeCallScreen } from '@/components/features/fake-call/FakeCallScreen';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { PhoneCall, Zap } from 'lucide-react';
+import { PhoneCall, Zap, Loader2 } from 'lucide-react';
 import Image from 'next/image';
+import { generateFakeCallImage } from '@/ai/flows/generate-fake-call-image-flow';
+import { useToast } from "@/hooks/use-toast";
 
-// Use the user-provided static image URL
+// Static image URL as a fallback
 const STATIC_IMAGE_URL = "https://fireworks.proxy.beehiiv.com/v2/images/5252c38d-37a4-4137-9b49-be360a15cb18.png?width=1024&height=996&fit=contain&auto=compress&compression=fast";
 
 export default function FakeCallPage() {
   const [showFakeCall, setShowFakeCall] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string>(STATIC_IMAGE_URL);
+  const [isImageLoading, setIsImageLoading] = useState<boolean>(true);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    async function loadImage() {
+      setIsImageLoading(true);
+      try {
+        const result = await generateFakeCallImage();
+        if (result && result.imageDataUri) {
+          setImageUrl(result.imageDataUri);
+        } else {
+          toast({
+            title: "Image Info",
+            description: "Could not generate a dynamic image, using default.",
+            variant: "default" 
+          });
+        }
+      } catch (error) {
+        console.error("Failed to generate fake call image:", error);
+        toast({
+          title: "Image Generation Failed",
+          description: "Using default image. Please try again later.",
+          variant: "destructive",
+        });
+        // Fallback to static image is already handled by initial state of imageUrl
+      } finally {
+        setIsImageLoading(false);
+      }
+    }
+    loadImage();
+  }, [toast]);
 
   const handleStartFakeCall = () => {
     setShowFakeCall(true);
@@ -40,14 +74,19 @@ export default function FakeCallPage() {
         </CardHeader>
         <CardContent className="space-y-6">
            <div className="w-full h-64 md:h-72 relative rounded-lg overflow-hidden bg-muted flex items-center justify-center border">
-            <Image 
-              src={STATIC_IMAGE_URL} 
-              alt="Memoji-style avatar on a call with a classic phone receiver" 
-              layout="fill" 
-              objectFit="contain" 
-              data-ai-hint="avatar call"
-              className="p-2"
-            />
+            {isImageLoading ? (
+              <Loader2 className="h-12 w-12 animate-spin text-primary" />
+            ) : (
+              <Image 
+                src={imageUrl} 
+                alt="Memoji-style avatar on a call with a classic phone receiver" 
+                layout="fill" 
+                objectFit="contain" 
+                data-ai-hint="avatar call"
+                className="p-2"
+                unoptimized={imageUrl.startsWith('data:')}
+              />
+            )}
           </div>
           <Button onClick={handleStartFakeCall} size="lg" className="w-full">
             <Zap className="mr-2 h-5 w-5" /> Start Fake Call
