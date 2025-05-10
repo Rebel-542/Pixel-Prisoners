@@ -148,8 +148,8 @@ export function AppLayout({ children }: { children: ReactNode }) {
       <main className="flex-1">
         {children}
       </main>
-      <footer className="py-6 md:px-8 md:py-0 border-t">
-        <div className="container flex flex-col items-center justify-center gap-4 md:h-24 md:flex-col">
+      <footer className="py-4 md:px-8 md:py-0 border-t">
+        <div className="container flex flex-col items-center justify-center gap-3 md:h-20 md:flex-col">
           <p className="text-center text-sm leading-loose text-muted-foreground">
             Guardian Angel 2025 Stay Safe
           </p>
