@@ -4,99 +4,99 @@
 
 @layer base {
   :root {
-    --background: 220 20% 98%; /* Light cool off-white */
-    --foreground: 220 10% 20%; /* Dark cool gray for text */
+    --background: 300 40% 98%; /* Pale Lavender White */
+    --foreground: 240 10% 30%; /* Softer Dark Slate Blue/Grey */
 
     --card: 0 0% 100%; /* White */
-    --card-foreground: 220 10% 20%;
+    --card-foreground: 240 10% 30%;
 
     --popover: 0 0% 100%; /* White */
-    --popover-foreground: 220 10% 20%;
+    --popover-foreground: 240 10% 30%;
 
-    --primary: 217 89% 61%; /* Calm Blue #4285F4 */
+    --primary: 330 80% 70%; /* Soft Rose Pink */
     --primary-foreground: 0 0% 100%; /* White */
 
-    --secondary: 220 15% 90%; /* Soft Gray #E0E0E0 adjusted for secondary elements */
-    --secondary-foreground: 220 10% 25%; /* Darker gray for text on secondary */
+    --secondary: 300 30% 94%; /* Light Lavender Gray */
+    --secondary-foreground: 240 10% 40%; /* Darker Slate Blue/Grey */
 
-    --muted: 220 15% 94%; /* Lighter muted gray */
-    --muted-foreground: 220 10% 45%; 
+    --muted: 300 30% 97%; /* Very Light Lavender Gray */
+    --muted-foreground: 240 10% 55%; /* Medium Slate Blue/Grey */
 
-    --accent: 16 100% 57%; /* Alert Orange #FF5722 */
+    --accent: 25 95% 65%; /* Warm Coral - For SOS and highlights */
     --accent-foreground: 0 0% 100%; /* White */
 
     --destructive: 0 84.2% 60.2%; /* Default destructive red */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 10% 85%;
-    --input: 220 10% 92%;
-    --ring: 217 89% 61%; /* Primary color for focus rings */
+    --border: 300 20% 90%; /* Light Lavender Border */
+    --input: 300 20% 95%; /* Very Light Lavender Input BG */
+    --ring: 330 80% 70%; /* Primary color for focus rings (Soft Rose Pink) */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* Increased for softer corners */
 
-    /* Chart colors (can be adjusted or expanded if charts are used) */
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    /* Chart colors */
+    --chart-1: 330 70% 75%; /* Soft Pink */
+    --chart-2: 25 80% 70%;  /* Peach */
+    --chart-3: 200 70% 75%; /* Soft Sky Blue */
+    --chart-4: 45 70% 70%;  /* Soft Yellow */
+    --chart-5: 270 60% 75%; /* Lavender */
     
-    /* Sidebar specific colors (not heavily used in this design, but good to have) */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar specific colors */
+    --sidebar-background: hsl(var(--background));
+    --sidebar-foreground: hsl(var(--foreground));
+    --sidebar-primary: hsl(var(--primary));
+    --sidebar-primary-foreground: hsl(var(--primary-foreground));
+    --sidebar-accent: hsl(330 70% 95%); /* Very Light Rose Pink for hover */
+    --sidebar-accent-foreground: hsl(var(--primary)); /* Soft Rose Pink text on hover */
+    --sidebar-border: hsl(var(--border));
+    --sidebar-ring: hsl(var(--ring));
   }
 
   .dark {
-    --background: 220 10% 10%;
-    --foreground: 220 20% 95%;
+    --background: 240 10% 12%; /* Dark Slate Blue */
+    --foreground: 300 30% 90%; /* Light Lavender Tint for text */
 
-    --card: 220 10% 12%;
-    --card-foreground: 220 20% 95%;
+    --card: 240 10% 15%; /* Slightly darker card for depth */
+    --card-foreground: 300 30% 90%;
 
-    --popover: 220 10% 12%;
-    --popover-foreground: 220 20% 95%;
+    --popover: 240 10% 15%;
+    --popover-foreground: 300 30% 90%;
 
-    --primary: 217 89% 61%; /* Calm Blue #4285F4 */
+    --primary: 330 70% 65%; /* Muted Rose Pink for dark mode */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 20%; 
-    --secondary-foreground: 220 20% 90%;
+    --secondary: 240 10% 20%; /* Darker Slate */
+    --secondary-foreground: 300 30% 85%; /* Lighter Lavender tint for text on secondary */
 
-    --muted: 220 15% 25%;
-    --muted-foreground: 220 10% 65%;
+    --muted: 240 10% 25%; /* Very Dark Slate */
+    --muted-foreground: 300 20% 70%; /* Medium Lavender tint for muted text */
 
-    --accent: 16 100% 57%; /* Alert Orange #FF5722 */
+    --accent: 25 90% 60%; /* Slightly darker Coral for dark mode */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72.2% 50.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 10% 30%;
-    --input: 220 10% 28%;
-    --ring: 217 89% 61%;
+    --border: 240 10% 25%; /* Dark Slate Border */
+    --input: 240 10% 22%; /* Dark Slate Input BG */
+    --ring: 330 70% 65%; /* Primary color for focus rings (Muted Rose Pink) */
     
     /* Chart colors for dark mode */
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --chart-1: 330 60% 60%; /* Muted Pink */
+    --chart-2: 25 70% 55%;  /* Muted Peach */
+    --chart-3: 200 60% 60%; /* Muted Sky Blue */
+    --chart-4: 45 60% 55%;  /* Muted Yellow */
+    --chart-5: 270 50% 60%; /* Muted Lavender */
 
     /* Sidebar specific colors for dark mode */
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: hsl(var(--background));
+    --sidebar-foreground: hsl(var(--foreground));
+    --sidebar-primary: hsl(var(--primary));
+    --sidebar-primary-foreground: hsl(var(--primary-foreground));
+    --sidebar-accent: hsl(330 60% 25%); /* Muted Rose for hover */
+    --sidebar-accent-foreground: hsl(330 70% 85%); /* Lighter Rose for text on hover */
+    --sidebar-border: hsl(var(--border));
+    --sidebar-ring: hsl(var(--ring));
   }
 }
 

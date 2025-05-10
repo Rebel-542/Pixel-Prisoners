@@ -36,7 +36,7 @@ export default function FakeCallPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-           <div className="w-full h-48 relative rounded-lg overflow-hidden bg-muted" data-ai-hint="phone ringing">
+           <div className="w-full h-48 relative rounded-lg overflow-hidden bg-muted" data-ai-hint="calm abstract">
             <Image src="https://picsum.photos/seed/fakecallui/400/200" layout="fill" objectFit="cover" alt="Phone call illustration" />
           </div>
           <Button onClick={handleStartFakeCall} size="lg" className="w-full">

@@ -84,7 +84,7 @@ export default function HomePage() {
             icon={<Settings className="h-8 w-8" />}
             cta="Go to Settings"
           />
-           <Card className="flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300 items-center justify-center p-6 bg-secondary/30" data-ai-hint="safety shield">
+           <Card className="flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300 items-center justify-center p-6 bg-secondary/30" data-ai-hint="supportive community">
             <Image src="https://picsum.photos/seed/safetyhero/300/200" alt="Safety illustration" width={300} height={200} className="rounded-lg mb-4" />
             <CardTitle className="text-xl text-center">Your Safety, Our Priority</CardTitle>
             <CardDescription className="text-center mt-2">We are committed to helping you stay safe.</CardDescription>

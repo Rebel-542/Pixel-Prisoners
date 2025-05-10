@@ -224,7 +224,7 @@ export function LocationSharingManager() {
         <Button onClick={handleStartSharing} size="lg" className="w-full" disabled={selectedContacts.length === 0}>
           <PlayCircle className="mr-2 h-5 w-5" /> Start Sharing
         </Button>
-        <div className="w-full h-48 relative rounded-lg overflow-hidden bg-muted" data-ai-hint="map illustration">
+        <div className="w-full h-48 relative rounded-lg overflow-hidden bg-muted" data-ai-hint="friendly journey">
           <Image src="https://picsum.photos/seed/mapshare/400/200" layout="fill" objectFit="cover" alt="Map placeholder" />
            <div className="absolute inset-0 flex items-center justify-center bg-black/30">
             <p className="text-white text-lg font-semibold">Map Area Placeholder</p>

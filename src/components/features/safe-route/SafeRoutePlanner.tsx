@@ -131,7 +131,7 @@ export function SafeRoutePlanner() {
               <p className="text-muted-foreground whitespace-pre-wrap">{routeSuggestion.safetyConcerns}</p>
             </div>
             )}
-            <div className="w-full h-60 relative rounded-lg overflow-hidden bg-muted border" data-ai-hint="map route">
+            <div className="w-full h-60 relative rounded-lg overflow-hidden bg-muted border" data-ai-hint="peaceful path">
               <Image src="https://picsum.photos/seed/maproute/600/300" layout="fill" objectFit="cover" alt="Map placeholder showing route" />
               <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                 <p className="text-white text-xl font-semibold p-4 text-center">Route Visualization Placeholder</p>
