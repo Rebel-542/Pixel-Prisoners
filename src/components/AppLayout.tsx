@@ -29,8 +29,8 @@ const navItems: NavItem[] = [
   { href: '/share-location', label: 'Share Location', icon: <MapPin className="h-5 w-5" /> },
   { href: '/safe-route', label: 'Safe Route', icon: <Route className="h-5 w-5" /> },
   { href: '/fake-call', label: 'Fake Call', icon: <PhoneCall className="h-5 w-5" /> },
-  { href: '/profile', label: 'Profile', icon: <UserCircle className="h-5 w-5" /> },
   { href: '/settings', label: 'Settings', icon: <Settings className="h-5 w-5" /> },
+  { href: '/profile', label: 'Profile', icon: <UserCircle className="h-5 w-5" /> },
 ];
 
 const AppHeader = () => {

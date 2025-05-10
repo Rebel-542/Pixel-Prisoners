@@ -19,36 +19,34 @@ export default function ShareLocationPage() {
     );
   }
 
-  if (!currentUser) {
-    return (
-      <div className="container mx-auto py-12 px-4 flex flex-col items-center justify-center min-h-[calc(100vh-8rem)]">
-        <Card className="w-full max-w-md text-center shadow-xl">
-          <CardHeader>
-             <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit mb-4 text-primary">
-              <MapPin className="h-12 w-12" />
-            </div>
-            <CardTitle>Share Your Location Safely</CardTitle>
-            <CardDescription>
-              Please log in or create an account to share your location with your trusted contacts.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button asChild size="lg" className="w-full">
-              <Link href="/profile?redirect=/share-location">Login / Sign Up</Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
+  // Content is now shown even if !currentUser.
+  // LocationSharingManager will render. If contacts are needed from a logged-in user's account,
+  // LocationSharingManager should handle the state where currentUser is null (e.g., disable sharing or prompt login).
 
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="max-w-lg mx-auto">
         <h1 className="text-3xl font-bold mb-8 text-center">Share Your Location</h1>
+        {!currentUser && (
+          <Card className="mb-8 shadow-lg border-primary/50 bg-primary/5">
+            <CardHeader className="text-center">
+               <div className="mx-auto bg-primary/10 p-3 rounded-full w-fit mb-3 text-primary">
+                <MapPin className="h-8 w-8" />
+              </div>
+              <CardTitle>Login to Share Location</CardTitle>
+              <CardDescription>
+                Please log in to share your location with your trusted contacts from your account.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="text-center">
+              <Button asChild size="lg">
+                <Link href="/profile?redirect=/share-location">Login / Sign Up</Link>
+              </Button>
+            </CardContent>
+          </Card>
+        )}
         <LocationSharingManager />
       </div>
     </div>
   );
 }
-
