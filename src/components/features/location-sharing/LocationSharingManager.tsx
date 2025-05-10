@@ -20,6 +20,9 @@ const DURATION_OPTIONS = [
   { value: '0', label: 'Indefinitely' }, // 0 for indefinite
 ];
 
+// Provided image URL for Google Maps logo
+const GOOGLE_MAPS_IMAGE_URL = "https://fireworks.proxy.beehiiv.com/v2/images/0e7a5a13-7640-4a75-bb8e-93a20991a2c5.png";
+
 export function LocationSharingManager() {
   const { contacts } = useTrustedContacts();
   const [selectedContacts, setSelectedContacts] = useState<string[]>([]);
@@ -224,11 +227,8 @@ export function LocationSharingManager() {
         <Button onClick={handleStartSharing} size="lg" className="w-full" disabled={selectedContacts.length === 0}>
           <PlayCircle className="mr-2 h-5 w-5" /> Start Sharing
         </Button>
-        <div className="w-full h-48 relative rounded-lg overflow-hidden bg-muted border" data-ai-hint="map route">
-          <Image src="https://picsum.photos/seed/googlemap/600/400" layout="fill" objectFit="cover" alt="Map placeholder showing a generic map view" />
-           <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-            <p className="text-white text-lg font-semibold">Map Area Placeholder</p>
-          </div>
+        <div className="w-full h-48 relative rounded-lg overflow-hidden bg-muted border flex items-center justify-center" data-ai-hint="map logo">
+          <Image src={GOOGLE_MAPS_IMAGE_URL} layout="fill" objectFit="contain" alt="Google Maps logo" className="p-4"/>
         </div>
       </CardContent>
     </Card>
