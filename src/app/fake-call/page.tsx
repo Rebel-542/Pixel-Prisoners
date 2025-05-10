@@ -36,8 +36,8 @@ export default function FakeCallPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-           <div className="w-full h-48 relative rounded-lg overflow-hidden bg-muted" data-ai-hint="calm abstract">
-            <Image src="https://picsum.photos/seed/fakecallui/400/200" layout="fill" objectFit="cover" alt="Phone call illustration" />
+           <div className="w-full h-48 relative rounded-lg overflow-hidden bg-muted" data-ai-hint="cellphone ui">
+            <Image src="https://picsum.photos/seed/cellphoneInterface/400/200" layout="fill" objectFit="cover" alt="Smartphone screen illustration for fake call" />
           </div>
           <Button onClick={handleStartFakeCall} size="lg" className="w-full">
             <Zap className="mr-2 h-5 w-5" /> Start Fake Call
@@ -50,3 +50,4 @@ export default function FakeCallPage() {
     </div>
   );
 }
+
