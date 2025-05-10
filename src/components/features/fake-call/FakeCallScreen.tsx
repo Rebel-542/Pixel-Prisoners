@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Phone, PhoneOff, UserCircle2 } from 'lucide-react';
@@ -18,10 +18,15 @@ const callers = [
   { name: "Unknown Caller", avatarSeed: "unknown" },
 ];
 
+// IMPORTANT: Create an audio file (e.g., mp3, wav) and place it in the `public/audio` directory.
+// For example, if your file is `ringtone.mp3`, the path would be `/audio/ringtone.mp3`.
+const RINGTONE_PATH = "/audio/default-ringtone.mp3"; // Update this path if needed
+
 export function FakeCallScreen({ onEndCall }: FakeCallScreenProps) {
   const [isCallActive, setIsCallActive] = useState(false);
   const [callDuration, setCallDuration] = useState(0);
   const [caller, setCaller] = useState({ name: "Mom", avatarSeed: "mom" });
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     // Select a random caller when component mounts
@@ -39,6 +44,34 @@ export function FakeCallScreen({ onEndCall }: FakeCallScreenProps) {
     return () => clearInterval(timer);
   }, [isCallActive]);
 
+  useEffect(() => {
+    // Initialize audio element
+    if (!audioRef.current) {
+      audioRef.current = new Audio(RINGTONE_PATH);
+      audioRef.current.loop = true;
+    }
+
+    const audio = audioRef.current;
+
+    if (!isCallActive) { // Incoming call state
+      audio.play().catch(error => {
+        console.error("Error playing ringtone:", error);
+        // You might want to inform the user if autoplay is blocked,
+        // though typically interaction (clicking to start fake call) should allow it.
+      });
+    } else { // Call is active (accepted)
+      audio.pause();
+      audio.currentTime = 0; // Reset audio to the beginning
+    }
+
+    // Cleanup function: stop audio when component unmounts
+    return () => {
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, [isCallActive]);
+
+
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
     const secs = (seconds % 60).toString().padStart(2, '0');
@@ -47,10 +80,15 @@ export function FakeCallScreen({ onEndCall }: FakeCallScreenProps) {
 
   const handleAcceptCall = () => {
     setIsCallActive(true);
+    // Ringtone will stop due to the useEffect dependency on isCallActive
   };
 
   const handleRejectOrEndCall = () => {
-    setIsCallActive(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setIsCallActive(false); // Though this might re-trigger the useEffect, onEndCall will usually unmount
     onEndCall();
   };
 
