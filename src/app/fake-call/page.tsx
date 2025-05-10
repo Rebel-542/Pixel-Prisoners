@@ -33,7 +33,7 @@ export default function FakeCallPage() {
           variant: "destructive",
         });
         // Fallback to a generic placeholder if generation fails
-        setGeneratedImageUrl("https://picsum.photos/seed/defaultFakeCall/400/200");
+        setGeneratedImageUrl("https://picsum.photos/seed/cellphonePerson/400/200");
       } finally {
         setIsGeneratingImage(false);
       }
@@ -80,7 +80,7 @@ export default function FakeCallPage() {
                 layout="fill" 
                 objectFit="contain" 
                 alt="AI generated illustration for fake call" 
-                data-ai-hint="woman headset"
+                data-ai-hint="person cellphone"
                 className="p-2" // Add some padding around the image
               />
             )}
@@ -89,13 +89,13 @@ export default function FakeCallPage() {
                     <p>Image could not be loaded.</p>
                     <p className="text-xs">Displaying default placeholder.</p>
                      <Image 
-                        src="https://picsum.photos/seed/fallbackFakeCall/400/200" 
+                        src="https://picsum.photos/seed/cellphoneGeneric/400/200" 
                         width={400}
                         height={200}
                         objectFit="cover" 
-                        alt="Fallback placeholder image" 
+                        alt="Fallback placeholder image for a cellphone" 
                         className="mt-2 rounded"
-                        data-ai-hint="placeholder image"
+                        data-ai-hint="cellphone placeholder"
                     />
                 </div>
             )}

@@ -29,7 +29,7 @@ const generateFakeCallImageFlow = ai.defineFlow(
   async () => {
     const {media} = await ai.generate({
       model: 'googleai/gemini-2.0-flash-exp', // Specific model for image generation
-      prompt: `Generate an image in the style of an Apple Memoji. The image should feature a friendly-looking woman with blonde hair. She is wearing a white collared shirt and black over-ear headphones. She is smiling and holding a classic black telephone receiver to her left ear with her left hand. The background should be transparent or a simple, clean white. The image should be cropped to show her from the chest up. Ensure the style is clean, 3D-like, and matches the emoji aesthetic. Focus on a clear, well-lit depiction.`,
+      prompt: `Generate an image in the style of an Apple Memoji or a similar friendly 3D avatar style. The image should feature a person holding a modern smartphone to their ear, appearing as if they are on a call. The person should have a neutral or pleasant expression, and could be wearing simple, casual attire. The background should be clean and unobtrusive, ideally transparent or a solid light color to keep the focus on the person. The image should be cropped from the chest or shoulders up. The style should be clear, well-lit, and suitable for a user interface element representing an incoming call. The smartphone itself should be clearly visible and recognizable as a modern device.`,
       config: {
         responseModalities: ['TEXT', 'IMAGE'],
         // Optional: Add safety settings if needed, e.g., to be less restrictive for certain content.
