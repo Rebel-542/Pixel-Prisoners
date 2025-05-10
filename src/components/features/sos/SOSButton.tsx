@@ -149,10 +149,10 @@ export function SOSButton({ className }: SOSButtonProps) {
         <Button
           variant="default"
           size="lg"
-          className={`bg-green-600 hover:bg-green-700 text-white text-xl font-bold py-8 px-10 rounded-full shadow-lg animate-pulse ${className}`}
+          className={`bg-green-600 hover:bg-green-700 text-white text-2xl font-bold py-10 px-12 rounded-full shadow-lg animate-pulse ${className}`}
           onClick={handleCancelSOS}
         >
-          <ShieldAlert className="mr-2 h-8 w-8" /> SOS ACTIVE - TAP TO CANCEL
+          <ShieldAlert className="mr-2 h-10 w-10" /> SOS ACTIVE - TAP TO CANCEL
         </Button>
         {locationError && <p className="text-destructive">Location Error: {locationError}</p>}
         {currentLocation && (
@@ -171,10 +171,9 @@ export function SOSButton({ className }: SOSButtonProps) {
         <Button
           variant="default"
           size="lg"
-          className={`bg-accent hover:bg-orange-600 text-accent-foreground text-xl font-bold py-8 px-10 rounded-full shadow-lg hover:shadow-xl transition-shadow ${className}`}
-          // onClick={handleSOSClick}
+          className={`bg-accent hover:bg-red-700 text-accent-foreground text-2xl font-bold py-10 px-12 rounded-full shadow-lg hover:shadow-xl transition-shadow ${className}`}
         >
-          <ShieldAlert className="mr-2 h-8 w-8" /> SOS
+          <ShieldAlert className="mr-3 h-10 w-10" /> SOS
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -189,7 +188,7 @@ export function SOSButton({ className }: SOSButtonProps) {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction 
             onClick={handleSOSActivation} 
-            className="bg-accent hover:bg-orange-600 text-accent-foreground"
+            className="bg-accent hover:bg-red-700 text-accent-foreground"
             disabled={contacts.length === 0}
           >
             Activate SOS
