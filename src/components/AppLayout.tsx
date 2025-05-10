@@ -2,7 +2,7 @@
 "use client";
 import type { ReactNode } from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Users, MapPin, Route, PhoneCall, Settings, Menu, Instagram, Twitter, Facebook, LogIn, LogOut, UserCircle } from 'lucide-react';
+import { ShieldCheck, Users, MapPin, Route, PhoneCall, Settings, Menu, Instagram, Twitter, Facebook, LogOut, UserCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -51,8 +51,8 @@ const AppHeader = () => {
 
         <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
           {navItems.map((item) => (
-            <Button key={item.href} variant="ghost" asChild className="text-sm">
-              <Link href={item.href} className="font-medium transition-colors hover:text-primary hover:bg-primary/10 px-3 py-2 rounded-md">
+            <Button key={item.href} variant="ghost" asChild className="text-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+              <Link href={item.href} className="font-medium transition-colors px-3 py-2 rounded-md">
                 {item.label}
               </Link>
             </Button>
@@ -99,11 +99,9 @@ const AppHeader = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button asChild variant="outline">
-              <Link href="/profile">
-                <LogIn className="mr-2 h-4 w-4" /> Login / Sign Up
-              </Link>
-            </Button>
+            // Explicit "Login / Sign Up" button removed from here.
+            // The "Profile" link in navItems serves as the entry point to the login/signup page.
+            null
           )}
 
           <div className="md:hidden">
@@ -123,8 +121,8 @@ const AppHeader = () => {
                     </Link>
                     <nav className="flex flex-col space-y-1">
                       {navItems.map((item) => (
-                        <Button key={item.href} variant="ghost" className="justify-start w-full" asChild>
-                           <Link href={item.href} className="flex items-center gap-3 text-md w-full px-3 py-2 rounded-md hover:bg-primary/10 hover:text-primary">
+                        <Button key={item.href} variant="ghost" className="justify-start w-full hover:bg-sidebar-accent hover:text-sidebar-accent-foreground" asChild>
+                           <Link href={item.href} className="flex items-center gap-3 text-md w-full px-3 py-2 rounded-md">
                             {item.icon}
                             {item.label}
                           </Link>
@@ -151,7 +149,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
       </main>
       <footer className="py-4 md:px-8 md:py-0 border-t">
         <div className="container flex flex-col items-center justify-center gap-4 md:h-24 md:flex-col">
-          <p className="text-center text-sm leading-loose text-muted-foreground">
+          <p className="text-center text-sm leading-loose text-muted-foreground md:text-center">
             Guardian Angel 2025 Stay Safe
           </p>
           <div className="flex flex-col items-center gap-2">
@@ -176,5 +174,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
     </div>
   );
 }
+
+    
 
     
