@@ -1,3 +1,4 @@
+
 "use client";
 import type { ReactNode } from 'react';
 import Link from 'next/link';
@@ -51,7 +52,7 @@ const AppHeader = () => {
         <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
           {navItems.map((item) => (
             <Button key={item.href} variant="ghost" asChild className="text-sm">
-              <Link href={item.href} className="font-medium transition-colors hover:text-primary">
+              <Link href={item.href} className="font-medium transition-colors hover:text-primary hover:bg-primary/10 px-3 py-2 rounded-md">
                 {item.label}
               </Link>
             </Button>
@@ -60,7 +61,7 @@ const AppHeader = () => {
 
         <div className="flex items-center gap-2">
           {loading ? (
-             <div className="h-8 w-8 animate-pulse rounded-full bg-muted"></div>
+             <div className="h-10 w-10 animate-pulse rounded-full bg-muted"></div>
           ) : currentUser ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -120,10 +121,10 @@ const AppHeader = () => {
                        <ShieldCheck className="h-7 w-7 text-primary" />
                        <span className="text-lg font-bold">Guardian Angel</span>
                     </Link>
-                    <nav className="flex flex-col space-y-3">
+                    <nav className="flex flex-col space-y-1">
                       {navItems.map((item) => (
-                        <Button key={item.href} variant="ghost" className="justify-start" asChild>
-                           <Link href={item.href} className="flex items-center gap-3 text-md">
+                        <Button key={item.href} variant="ghost" className="justify-start w-full" asChild>
+                           <Link href={item.href} className="flex items-center gap-3 text-md w-full px-3 py-2 rounded-md hover:bg-primary/10 hover:text-primary">
                             {item.icon}
                             {item.label}
                           </Link>
@@ -149,7 +150,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
         {children}
       </main>
       <footer className="py-4 md:px-8 md:py-0 border-t">
-        <div className="container flex flex-col items-center justify-center gap-3 md:h-20 md:flex-col">
+        <div className="container flex flex-col items-center justify-center gap-4 md:h-24 md:flex-col">
           <p className="text-center text-sm leading-loose text-muted-foreground">
             Guardian Angel 2025 Stay Safe
           </p>
@@ -175,3 +176,5 @@ export function AppLayout({ children }: { children: ReactNode }) {
     </div>
   );
 }
+
+    
