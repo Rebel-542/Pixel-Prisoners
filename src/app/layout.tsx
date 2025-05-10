@@ -28,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <div className="feminine-background-pattern" aria-hidden="true"></div>
         <TrustedContactsProvider>
           <AppLayout>
             {children}
