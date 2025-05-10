@@ -1,7 +1,7 @@
+
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { AdvancedFeatureSetting } from "@/components/features/settings/AdvancedFeatureSetting";
 import { SmartphoneNfc, Mic, Camera, KeyRound, Save, Trash2, Loader2 } from "lucide-react";
@@ -14,27 +14,23 @@ import { useToast } from "@/hooks/use-toast";
 const API_KEY_STORAGE_KEY = "geminiApiKey";
 
 export default function SettingsPage() {
-  const { currentUser, loading: authLoading } = useAuth();
-  const router = useRouter();
+  const { loading: authLoading } = useAuth();
   const { toast } = useToast();
   const [apiKey, setApiKey] = useState("");
   const [isClientMounted, setIsClientMounted] = useState(false);
 
   useEffect(() => {
     setIsClientMounted(true); 
-    if (!authLoading && !currentUser) {
-      router.push('/profile?redirect=/settings');
-    }
-  }, [currentUser, authLoading, router]);
+  }, []);
   
   useEffect(() => {
-    if (currentUser && isClientMounted) {
+    if (isClientMounted) {
       const storedApiKey = localStorage.getItem(API_KEY_STORAGE_KEY);
       if (storedApiKey) {
         setApiKey(storedApiKey);
       }
     }
-  }, [currentUser, isClientMounted]);
+  }, [isClientMounted]);
 
 
   const handleSaveApiKey = () => {
@@ -62,7 +58,7 @@ export default function SettingsPage() {
     });
   };
 
-  if (authLoading || (!currentUser && !authLoading) || !isClientMounted) {
+  if (authLoading || !isClientMounted) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-12rem)]">
         <Loader2 className="h-10 w-10 animate-spin text-primary" />
@@ -156,3 +152,4 @@ export default function SettingsPage() {
     </div>
   );
 }
+

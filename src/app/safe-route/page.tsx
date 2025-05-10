@@ -1,22 +1,14 @@
+
 "use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { SafeRoutePlanner } from "@/components/features/safe-route/SafeRoutePlanner";
 import { Loader2 } from 'lucide-react';
 
 export default function SafeRoutePage() {
-  const { currentUser, loading } = useAuth();
-  const router = useRouter();
+  const { loading: authLoading } = useAuth();
 
-  useEffect(() => {
-    if (!loading && !currentUser) {
-      router.push('/profile?redirect=/safe-route');
-    }
-  }, [currentUser, loading, router]);
-
-  if (loading || !currentUser) {
+  if (authLoading) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-12rem)]">
         <Loader2 className="h-10 w-10 animate-spin text-primary" />
@@ -32,3 +24,4 @@ export default function SafeRoutePage() {
     </div>
   );
 }
+

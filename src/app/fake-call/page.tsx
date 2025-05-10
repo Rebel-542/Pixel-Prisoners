@@ -1,7 +1,7 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; 
 import { useAuth } from '@/hooks/useAuth'; 
 import { FakeCallScreen } from '@/components/features/fake-call/FakeCallScreen';
 import { Button } from '@/components/ui/button';
@@ -14,8 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 const STATIC_IMAGE_URL = "https://fireworks.proxy.beehiiv.com/v2/images/5252c38d-37a4-4137-9b49-be360a15cb18.png?width=1024&height=996&fit=contain&auto=compress&compression=fast";
 
 export default function FakeCallPage() {
-  const { currentUser, loading: authLoading } = useAuth(); 
-  const router = useRouter(); 
+  const { loading: authLoading } = useAuth(); 
 
   const [showFakeCall, setShowFakeCall] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>(STATIC_IMAGE_URL);
@@ -23,42 +22,34 @@ export default function FakeCallPage() {
   const { toast } = useToast();
 
   useEffect(() => {
-    if (!authLoading && !currentUser) {
-      router.push('/profile?redirect=/fake-call');
-    }
-  }, [currentUser, authLoading, router]);
-
-  useEffect(() => {
-    if (currentUser) {
-      async function loadImage() {
-        setIsImageLoading(true);
-        try {
-          const result = await generateFakeCallImage();
-          if (result && result.imageDataUri) {
-            setImageUrl(result.imageDataUri);
-          } else {
-            toast({
-              title: "Image Info",
-              description: "Could not generate a dynamic image, using default.",
-              variant: "default" 
-            });
-          }
-        } catch (error) {
-          console.error("Failed to generate fake call image:", error);
+    async function loadImage() {
+      setIsImageLoading(true);
+      try {
+        const result = await generateFakeCallImage();
+        if (result && result.imageDataUri) {
+          setImageUrl(result.imageDataUri);
+        } else {
+          setImageUrl(STATIC_IMAGE_URL); // Fallback to static if AI fails
           toast({
-            title: "Image Generation Failed",
-            description: "Using default image. Please try again later.",
-            variant: "destructive",
+            title: "Image Info",
+            description: "Could not generate a dynamic image, using default.",
+            variant: "default" 
           });
-        } finally {
-          setIsImageLoading(false);
         }
+      } catch (error) {
+        console.error("Failed to generate fake call image:", error);
+        setImageUrl(STATIC_IMAGE_URL); // Fallback to static on error
+        toast({
+          title: "Image Generation Failed",
+          description: "Using default image. Please try again later.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsImageLoading(false);
       }
-      loadImage();
-    } else {
-      setIsImageLoading(false); 
     }
-  }, [toast, currentUser]); 
+    loadImage();
+  }, [toast]); 
 
   const handleStartFakeCall = () => {
     setShowFakeCall(true);
@@ -68,7 +59,7 @@ export default function FakeCallPage() {
     setShowFakeCall(false);
   };
 
-  if (authLoading || (!currentUser && !authLoading)) { 
+  if (authLoading) { 
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-12rem)]">
         <Loader2 className="h-10 w-10 animate-spin text-primary" />
